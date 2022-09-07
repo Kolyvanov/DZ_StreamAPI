@@ -15,6 +15,12 @@ public class Main {
             );
         }
 
-        
+        long count = persons.stream()
+                .filter(person -> person.getAge() < 18)
+                .count();
+
+        System.out.println("Количество несовершеннолетних жителей: " + count);
+
+
     }
 }
