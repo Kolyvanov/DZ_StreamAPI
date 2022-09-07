@@ -27,12 +27,23 @@ public class Main {
 
         List<String> conscripts = persons.stream()
                 .filter(person -> person.getAge() >= 18)
-                .filter(person ->person.getAge() < 27)
+                .filter(person -> person.getAge() < 27)
                 .map(Person::getFamily)
                 .collect(Collectors.toList());
 
         System.out.println("Количество призывников: " + conscripts.size());
-        System.out.println(conscripts.get(0));
+        System.out.println("Фамилия первого призывника из списка: " + conscripts.get(0));
+
+        //получаем отсортированный по фамилии список потенциально работоспособных людей с высшим образованием
+        List<Person> workers = persons.stream()
+                .filter(person -> person.getAge() >= 18)
+                .filter(person -> person.getEducation() == Education.HIGHER)
+                .filter(person -> (person.getSex() == Sex.MAN && person.getAge() < 65) || (person.getSex() == Sex.WOMAN && person.getAge() < 60))
+                .sorted(Comparator.comparing(Person::getFamily))
+                .collect(Collectors.toList());
+
+        System.out.println("Количество потенциально работоспособных людей с высшим образованием: " + workers.size());
+        System.out.println("Первый человек из списка работоспособных с высшим образованием: " + workers.get(0));
 
 
     }
